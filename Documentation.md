@@ -8,3 +8,5 @@ This approach solves 2 problems:
 
  2) Sustained engagement - users have a reason to return daily, driving habitual interaction with the platform rather than a one-off claim The product team has also asked that the frontend show users exactly how long they must wait before their next claim, rather than just a disabled button - reducing support requests from confused users who don't understand why their transaction failed.
 
+For testing purposes,
+ - cooldown duration is set at 30 seconds
