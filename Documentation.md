@@ -10,3 +10,7 @@ This approach solves 2 problems:
 
 For testing purposes,
  - cooldown duration is set at 30 seconds
+
+To view deployed contracts on blockscout,
+ Utility tokens contract: https://eth-sepolia.blockscout.com/address/0x0346a974b8975a9925cb656ea158f7ee7544a577#code
+ Faucet contract: https://eth-sepolia.blockscout.com/address/0x70c019acf5e8afd47dcc4a3cbdbbfb14d8ada158#code
