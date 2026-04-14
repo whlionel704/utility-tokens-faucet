@@ -11,8 +11,8 @@ contract Faucet is Ownable {
     uint256 public coolDownDuration; //Simulate 24 hours with 24 seconds for testing
     uint256 public immutable MAX_SUPPLY;
 
-    event FaucetClaimed(address user, uint256 amount, uint256 timestamp);
-    event FaucetFunded(uint256 amount, uint256 timestamp);
+    event FaucetClaimed(address user, uint256 amount);
+    event FaucetFunded(uint256 amount);
 
     constructor(IUtilityToken _tokenContract, uint256 _claimAmount, uint256 _coolDownDuration, uint256 _maxSupply, address _owner)
         Ownable(_owner)
@@ -33,7 +33,7 @@ contract Faucet is Ownable {
         lastClaimed[msg.sender] = block.timestamp;
         bool success = tokenContract.transfer(msg.sender, claimAmount);
         require(success, "Token transfer failed");
-        emit FaucetClaimed(msg.sender, claimAmount, block.timestamp);
+        emit FaucetClaimed(msg.sender, claimAmount);
     }
 
     function canClaim(address user) external view returns (bool) {
@@ -64,7 +64,7 @@ contract Faucet is Ownable {
     function fundFaucet(uint256 amount) external onlyOwner {
         require(MAX_SUPPLY >= tokenContract.balanceOf(address(this)) + amount, "exceeds max supply");
         tokenContract.mintTokens(address(this), amount);
-        emit FaucetFunded(amount, block.timestamp);
+        emit FaucetFunded(amount);
     }
 
     function updateClaimAmount(uint256 newAmount) external onlyOwner {
