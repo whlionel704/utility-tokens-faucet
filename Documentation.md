@@ -8,6 +8,14 @@ This approach solves 2 problems:
 
  2) Sustained engagement - users have a reason to return daily, driving habitual interaction with the platform rather than a one-off claim The product team has also asked that the frontend show users exactly how long they must wait before their next claim, rather than just a disabled button - reducing support requests from confused users who don't understand why their transaction failed.
 
+Future work:
+
+As the platform scales, the team introduces a new objective:- Reward not just participation, but quality participation.
+Instead of treating all wallets equally, the faucet evolves into a reputation-aware reward system where users with stronger on-platform behavior receive improved reward access over time. This helps to:
+    - Incentivize meaningful engagement
+    - Reduce farming behavior
+    - Create long-term community alignment (TBD)
+
 For testing purposes,
  - cooldown duration is set at 30 seconds
 
