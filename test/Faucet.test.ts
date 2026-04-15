@@ -33,6 +33,23 @@ describe("Faucet", async function () {
   };
 
   describe("onlyOwner functions", function () {
+    it("should be able to fund the faucet with the correct amount and correct owner", async function () {
+      const { owner } = await getWalletClients();
+      const { utilityToken, faucet } = await deployFixtures();
+      const before = await utilityToken.read.balanceOf([faucet.address]);
+      await faucet.write.fundFaucet([FUNDING_AMOUNT], { account: owner.account });
+      const after = await utilityToken.read.balanceOf([faucet.address]);
+      assert.strictEqual(after - before, FUNDING_AMOUNT);
+      await viem.assertions.emitWithArgs(
+        faucet.write.fundFaucet([FUNDING_AMOUNT], { account: owner.account }),
+        faucet,
+        "FaucetFunded",
+        [
+          FUNDING_AMOUNT
+        ],
+      );
+    });
+
     it("Should throw onlyOwner error if fundFaucet is called with non owner", async function () {
       const { nonOwner } = await getWalletClients();
       const { faucet } = await deployFixtures();
@@ -60,25 +77,6 @@ describe("Faucet", async function () {
         faucet.write.updateCoolDownDuration([COOLDOWN_DURATION], { account: nonOwner.account }),
         faucet,
         "OwnableUnauthorizedAccount"
-      );
-    });
-  });
-
-  describe("fundFaucet", function () {
-    it("should be able to fund the faucet with the correct amount and correct owner", async function () {
-      const { owner } = await getWalletClients();
-      const { utilityToken, faucet } = await deployFixtures();
-      const before = await utilityToken.read.balanceOf([faucet.address]);
-      await faucet.write.fundFaucet([FUNDING_AMOUNT], { account: owner.account });
-      const after = await utilityToken.read.balanceOf([faucet.address]);
-      assert.equal(after - before, FUNDING_AMOUNT);
-      await viem.assertions.emitWithArgs(
-        faucet.write.fundFaucet([FUNDING_AMOUNT], { account: owner.account }),
-        faucet,
-        "FaucetFunded",
-        [
-          FUNDING_AMOUNT
-        ],
       );
     });
   });
