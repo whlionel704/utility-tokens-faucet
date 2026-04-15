@@ -1,6 +1,7 @@
 import { describe, it } from "node:test";
 import hre from "hardhat";
 import { keccak256, toBytes, getAddress } from "viem";
+import assert from "node:assert";
 const { viem, networkHelpers } = await hre.network.connect();
 
 describe("Faucet", async function () {
@@ -59,6 +60,25 @@ describe("Faucet", async function () {
         faucet.write.updateCoolDownDuration([COOLDOWN_DURATION], { account: nonOwner.account }),
         faucet,
         "OwnableUnauthorizedAccount"
+      );
+    });
+  });
+
+  describe("fundFaucet", function () {
+    it("should be able to fund the faucet with the correct amount and correct owner", async function () {
+      const { owner } = await getWalletClients();
+      const { utilityToken, faucet } = await deployFixtures();
+      const before = await utilityToken.read.balanceOf([faucet.address]);
+      await faucet.write.fundFaucet([FUNDING_AMOUNT], { account: owner.account });
+      const after = await utilityToken.read.balanceOf([faucet.address]);
+      assert.equal(after - before, FUNDING_AMOUNT);
+      await viem.assertions.emitWithArgs(
+        faucet.write.fundFaucet([FUNDING_AMOUNT], { account: owner.account }),
+        faucet,
+        "FaucetFunded",
+        [
+          FUNDING_AMOUNT
+        ],
       );
     });
   });
