@@ -6,11 +6,11 @@ import {
   parseEther,
   toBytes 
 } from "viem";
+import UtilityToken from "../../artifacts/contracts/UtilityToken.sol/UtilityToken.json";
+import Faucet from "../../artifacts/contracts/Faucet.sol/Faucet.json";
+import "dotenv/config";
 import { sepolia } from "viem/chains";
 import { privateKeyToAccount } from "viem/accounts";
-import UtilityToken from "../artifacts/contracts/UtilityToken.sol/UtilityToken.json";
-import Faucet from "../artifacts/contracts/Faucet.sol/Faucet.json";
-import "dotenv/config";
 
 const account = privateKeyToAccount(`0x${process.env.SEPOLIA_TESTNET_ADMIN_PRIVATE_KEY!}`);
 console.log('🚀 Starting deployments...');

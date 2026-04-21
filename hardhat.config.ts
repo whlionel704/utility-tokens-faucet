@@ -38,6 +38,7 @@ export default {
     besu: {
       type: "http",
       url: process.env.HOST_URL,
+      chainId: 1337,
       accounts: [
         `0x${process.env.ALLOC_1_PRIVATE_KEY}`,
         `0x${process.env.ALLOC_2_PRIVATE_KEY}`,
